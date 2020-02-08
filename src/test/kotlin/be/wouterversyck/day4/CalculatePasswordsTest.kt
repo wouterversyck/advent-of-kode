@@ -7,7 +7,7 @@ import kotlin.test.assertTrue
 
 class CalculatePasswordsTest {
     val neverDecreaseAnd = andCurry(::testNeverDecreaseRule)
-    
+
     private val rulesFirstStar = neverDecreaseAnd(::test2DigitsRule)
     private val rulesSecondStarWithWeird2DigitTest
             = neverDecreaseAnd(::test2DigitsRuleNotGroupedForIncreasingNumbers)

@@ -64,5 +64,5 @@ fun test2DigitsNotGroupedRule(number: Int): Boolean {
 
 fun or(a: (Int) -> Boolean, b: (Int) -> Boolean ) = { input: Int -> a(input) || b(input) }
 fun and(a: (Int) -> Boolean, b: (Int) -> Boolean ) = { input: Int -> a(input) && b(input) }
-fun andCurry(a: (Int) -> Boolean) = {b: (Int) -> Boolean -> {input: Int -> a(input) && b(input)} }
-fun orCurry(a: (Int) -> Boolean) = {b: (Int) -> Boolean -> {input: Int -> a(input) || b(input)} }
+fun andCurry(a: (Int) -> Boolean) = { b: (Int) -> Boolean -> {input: Int -> a(input) && b(input) } }
+fun orCurry(a: (Int) -> Boolean) = { b: (Int) -> Boolean -> {input: Int -> a(input) || b(input) } }
