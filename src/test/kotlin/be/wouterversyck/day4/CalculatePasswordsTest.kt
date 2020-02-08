@@ -6,10 +6,12 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class CalculatePasswordsTest {
-    private val rulesFirstStar = and(::test2DigitsRule, ::testNeverDecreaseRule)
+    val neverDecreaseAnd = andCurry(::testNeverDecreaseRule)
+    
+    private val rulesFirstStar = neverDecreaseAnd(::test2DigitsRule)
     private val rulesSecondStarWithWeird2DigitTest
-            = and(::test2DigitsRuleNotGroupedForIncreasingNumbers, ::testNeverDecreaseRule)
-    private val rulesSecondStar = and(::test2DigitsNotGroupedRule, ::testNeverDecreaseRule)
+            = neverDecreaseAnd(::test2DigitsRuleNotGroupedForIncreasingNumbers)
+    private val rulesSecondStar = neverDecreaseAnd(::test2DigitsNotGroupedRule)
 
     @Test
     fun testFirstStar() {
@@ -56,5 +58,21 @@ class CalculatePasswordsTest {
         assertFalse { and({ false }, { true })(5) }
         assertFalse { and({ true }, { false })(5) }
         assertTrue { and({ true }, { true })(5) }
+    }
+
+    @Test
+    fun testOrCurryFunction() {
+        assertFalse { orCurry { false }() { false }(5) }
+        assertTrue { orCurry { false }() { true }(5) }
+        assertTrue { orCurry { true }() { false }(5) }
+        assertTrue { orCurry { true }() { true }(5) }
+    }
+
+    @Test
+    fun testAndCurryFunction() {
+        assertFalse { andCurry { false }() { false }(5) }
+        assertFalse { andCurry { false }() { true }(5) }
+        assertFalse { andCurry { true }() { false }(5) }
+        assertTrue { andCurry { true }() { true }(5) }
     }
 }
